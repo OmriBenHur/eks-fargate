@@ -19,7 +19,7 @@ terraform {
 
 # provider conf. enter the region you're operating in
 provider "aws" {
-  region = "us-west-2"
+  region = var.aws-region
 }
 
 data "aws_eks_cluster_auth" "cluster-auth" {
