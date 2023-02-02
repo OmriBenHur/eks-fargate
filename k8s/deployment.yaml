@@ -8,7 +8,6 @@ spec:
     matchLabels:
       run: php-apache
   # remove replica if using gitops
-  replicas: 1
   template:
     metadata:
       labels:
@@ -26,3 +25,14 @@ spec:
           requests:
             cpu: 200m
             memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-apache
+  namespace: staging
+spec:
+  ports:
+  - port: 80
+  selector:
+    run: php-apache
