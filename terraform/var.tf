@@ -54,4 +54,23 @@ variable "eks-subnet-type" {
   default     = "public"
 }
 
+variable "metric-server-name" {
+  description = "name for internal helm release of metric server"
+  default = "metric-server"
+}
+
+variable "metric-server-repo-url" {
+  description = "repo for helm chart of the metric server"
+  default = "https://kubernetes-sigs.github.io/metrics-server/"
+}
+
+variable "metric-server-chart-name" {
+  description = "chart name for metric server in the matching repo"
+  default = "metrics-server"
+}
+
+variable "metric-server-chart-version" {
+  description = "version of chart to be installed"
+  default = "3.8.2"
+}
 
