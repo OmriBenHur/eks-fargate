@@ -32,7 +32,6 @@ provider "helm" {
     host                   = aws_eks_cluster.eks-cluster-private[0].endpoint
     cluster_ca_certificate = base64decode(aws_eks_cluster.eks-cluster-private[0].certificate_authority[0].data)
     token = data.aws_eks_cluster_auth.cluster-auth.token
-    load_config_file = false
   }
 }
 
