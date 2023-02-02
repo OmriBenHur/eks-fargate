@@ -12,8 +12,6 @@ spec:
     name: php-apache
   targetCPUUtilizationPercentage: 50
 
-
----
 ---
 apiVersion: policy/v1
 kind: PodDisruptionBudget

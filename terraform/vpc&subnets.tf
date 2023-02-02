@@ -31,7 +31,7 @@ resource "aws_subnet" "private" {
   availability_zone = data.aws_availability_zones.available_zones.names[count.index]
   tags = {
     Name                                            = "${var.vpc-name}-private-subnet-${count.index + 1}"
-    "Kubernetes.io / role / internal-elb"           = 2 + count.index
+    "Kubernetes.io / role / internal-elb"           = count.index
     "kubernetes.io / cluster / ${var.cluster-name}" = "owned"
   }
 }
