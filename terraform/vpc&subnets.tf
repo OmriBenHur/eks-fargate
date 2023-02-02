@@ -25,7 +25,7 @@ resource "aws_subnet" "public" {
 }
 # creating 2 private subnets
 resource "aws_subnet" "private" {
-  count             = var.subnet_amount
+  count             = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? var.subnet_amount : 0
   vpc_id            = aws_vpc.fargate-application.id
   cidr_block        = cidrsubnet(aws_vpc.fargate-application.cidr_block, 8, var.subnet_amount + count.index)
   availability_zone = data.aws_availability_zones.available_zones.names[count.index]

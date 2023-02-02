@@ -38,3 +38,20 @@ variable "eks-fargate-role-policy-arn" {
   type        = list(any)
   default     = ["arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy"]
 }
+
+variable "fargate-subnet-type" {
+  description = "public subnet or private subnet?"
+  default     = "public"
+}
+
+variable "fargate-staging-subnet-type" {
+  description = "public subnet or private subnet?"
+  default     = "public"
+}
+
+variable "eks-subnet-type" {
+  description = "public subnet or private subnet?"
+  default     = "public"
+}
+
+

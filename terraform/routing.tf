@@ -9,7 +9,7 @@ resource "aws_internet_gateway" "igw" {
 
 # creating two elastic ip's to use in NAT gateway to bridge connection to private subnet
 resource "aws_eip" "EIP" {
-  count      = var.subnet_amount
+  count      = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? var.subnet_amount : 0
   vpc        = true
   depends_on = [aws_internet_gateway.igw]
 
@@ -17,7 +17,7 @@ resource "aws_eip" "EIP" {
 
 #creating NAT gateway in public subnets and allocating elastic ips
 resource "aws_nat_gateway" "NAT_gateway" {
-  count         = var.subnet_amount
+  count      = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? var.subnet_amount : 0
   subnet_id     = element(aws_subnet.public.*.id, count.index)
   allocation_id = element(aws_eip.EIP.*.id, count.index)
   tags = {
@@ -41,7 +41,7 @@ resource "aws_route_table" "public_rtb" {
 
 # private route table
 resource "aws_route_table" "private_rtb" {
-  count  = var.subnet_amount
+  count  = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? var.subnet_amount : 0
   vpc_id = aws_vpc.fargate-application.id
 
   route {
@@ -63,7 +63,8 @@ resource "aws_route_table_association" "public_rtb_asso" {
 
 # private route table association
 resource "aws_route_table_association" "private_rtb_asso" {
-  count          = var.subnet_amount
+  depends_on     = [aws_route_table.private_rtb]
+  count          = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? var.subnet_amount : 0
   route_table_id = element(aws_route_table.private_rtb.*.id, count.index)
   subnet_id      = element(aws_subnet.private.*.id, count.index)
 }

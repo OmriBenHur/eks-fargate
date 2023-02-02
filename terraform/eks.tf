@@ -29,7 +29,28 @@ resource "aws_iam_policy_attachment" "eks-cluster-role-policy-attachment" {
 
 
 # the eks control plane
-resource "aws_eks_cluster" "eks-cluster" {
+resource "aws_eks_cluster" "eks-cluster-public" {
+  count    = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? 0 : 1
+  name     = var.cluster-name
+  version  = var.eks-cluster-version
+  role_arn = aws_iam_role.eks-role.arn
+
+
+  vpc_config {
+    subnet_ids = [for j in aws_subnet.public : j.id]
+    endpoint_private_access = false
+    endpoint_public_access = true
+    public_access_cidrs = ["0.0.0.0/0"]
+  }
+
+  # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
+  # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
+  depends_on = [aws_iam_policy_attachment.eks-cluster-role-policy-attachment, aws_eks_fargate_profile.kube-system-fargate-profile,aws_eks_fargate_profile.staging]
+}
+
+# the eks control plane
+resource "aws_eks_cluster" "eks-cluster-private" {
+  count    = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? 1 : 0
   name     = var.cluster-name
   version  = var.eks-cluster-version
   role_arn = aws_iam_role.eks-role.arn
@@ -44,5 +65,5 @@ resource "aws_eks_cluster" "eks-cluster" {
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
-  depends_on = [aws_iam_policy_attachment.eks-cluster-role-policy-attachment]
+  depends_on = [aws_iam_policy_attachment.eks-cluster-role-policy-attachment, aws_eks_fargate_profile.kube-system-fargate-profile,aws_eks_fargate_profile.staging]
 }
