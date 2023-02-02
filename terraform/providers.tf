@@ -22,15 +22,17 @@ provider "aws" {
   region = "us-west-2"
 }
 
+data "aws_eks_cluster_auth" "cluster-auth" {
+  depends_on = [aws_eks_cluster.eks-cluster-private[0]]
+  name       = aws_eks_cluster.eks-cluster-private[0].name
+}
+
 provider "helm" {
   kubernetes {
     host                   = aws_eks_cluster.eks-cluster-private[0].endpoint
     cluster_ca_certificate = base64decode(aws_eks_cluster.eks-cluster-private[0].certificate_authority[0].data)
-    exec {
-      api_version = "client.authentication.k8s.io/v1beta1"
-      args        = ["eks", "get-token", "--cluster-name", aws_eks_cluster.eks-cluster-private[0].id]
-      command     = "aws"
-    }
+    token = data.aws_eks_cluster_auth.cluster-auth.token
+    load_config_file = false
   }
 }
 
