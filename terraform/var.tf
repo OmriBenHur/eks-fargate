@@ -41,12 +41,12 @@ variable "eks-fargate-role-policy-arn" {
 
 variable "fargate-subnet-type" {
   description = "public subnet or private subnet?"
-  default     = "public"
+  default     = "private"
 }
 
 variable "fargate-staging-subnet-type" {
   description = "public subnet or private subnet?"
-  default     = "public"
+  default     = "private"
 }
 
 variable "eks-subnet-type" {

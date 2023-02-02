@@ -45,7 +45,7 @@ resource "aws_eks_cluster" "eks-cluster-public" {
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
-  depends_on = [aws_iam_policy_attachment.eks-cluster-role-policy-attachment, aws_eks_fargate_profile.kube-system-fargate-profile,aws_eks_fargate_profile.staging]
+  depends_on = [aws_iam_policy_attachment.eks-cluster-role-policy-attachment]
 }
 
 # the eks control plane
@@ -65,5 +65,5 @@ resource "aws_eks_cluster" "eks-cluster-private" {
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Cluster handling.
   # Otherwise, EKS will not be able to properly delete EKS managed EC2 infrastructure such as Security Groups.
-  depends_on = [aws_iam_policy_attachment.eks-cluster-role-policy-attachment, aws_eks_fargate_profile.kube-system-fargate-profile,aws_eks_fargate_profile.staging]
+  depends_on = [aws_iam_policy_attachment.eks-cluster-role-policy-attachment]
 }
