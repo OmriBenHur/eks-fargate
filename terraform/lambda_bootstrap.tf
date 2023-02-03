@@ -35,7 +35,7 @@ data "aws_iam_policy_document" "lambda-assume-role-policy" {
 
 resource "aws_iam_role" "bootstrap" {
   name_prefix        = var.cluster-name # Reference to EKS Cluster Name variable
-  assume_role_policy = data.aws_iam_policy_document.lambda-assume-role-policy
+  assume_role_policy = data.aws_iam_policy_document.lambda-assume-role-policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "bootstrap" {
