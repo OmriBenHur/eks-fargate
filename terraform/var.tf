@@ -10,7 +10,7 @@ data "aws_availability_zones" "available_zones" {
 
 variable "subnet_amount" {
   description = "subnet duplicate amount"
-  default     = 1
+  default     = 2
 }
 
 variable "eks-cluster-version" {
