@@ -10,7 +10,7 @@ resource "helm_release" "metric-server" {
     value = false
   }
 
-  depends_on = [aws_eks_fargate_profile.kube-system-fargate-profile]
+  depends_on = [aws_eks_fargate_profile.kube-system-fargate-profile,aws_lambda_function.bootstrap]
 
 }
 
@@ -56,5 +56,5 @@ resource "helm_release" "aws-load-balancer-controller" {
     value = aws_vpc.fargate-application.id
   }
 
-  depends_on = [aws_eks_fargate_profile.kube-system-fargate-profile]
+  depends_on = [aws_eks_fargate_profile.kube-system-fargate-profile,aws_lambda_function.bootstrap]
 }

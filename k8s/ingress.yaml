@@ -6,13 +6,11 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-#    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:<your-id>:certificate/6b2831b8-3fcc-4b4b-81e8-e7325dfbca84
-#    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
-#    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/subnets: fargate-application-private-subnet-1, fargate-application-private-subnet-2
 spec:
   ingressClassName: alb
   rules:
-    - host: php-apache.devopsbyexample.io
+    - host: fargate.omrisaaprac.com
       http:
         paths:
           - path: /
