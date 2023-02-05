@@ -51,6 +51,7 @@ resource "aws_lambda_function" "bootstrap" {
   filename         = data.archive_file.bootstrap_archive.output_path
   source_code_hash = data.archive_file.bootstrap_archive.output_base64sha256
   timeout          = 120
+  depends_on = [aws_eks_cluster.eks-cluster-private[0]]
 
   vpc_config {
     subnet_ids = concat([for o in aws_subnet.private : o.id], [for j in aws_subnet.public : j.id])

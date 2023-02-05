@@ -2,7 +2,7 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.fargate-application.id
 
   tags = {
-    name = "igw"
+    Name = "${var.vpc-name}igw"
   }
 }
 
