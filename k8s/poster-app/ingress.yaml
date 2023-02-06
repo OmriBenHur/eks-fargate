@@ -13,7 +13,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: fargate.omrisaaprac.com
+    - host:
       http:
         paths:
           - path: /
