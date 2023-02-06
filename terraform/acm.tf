@@ -13,5 +13,5 @@ resource "aws_acm_certificate" "cert" {
 
 resource "aws_acm_certificate_validation" "hello_cert_validate" {
   certificate_arn = aws_acm_certificate.cert.arn
-  validation_record_fqdns = [var.fqdns]
+  validation_record_fqdns = [for o in var.fqdns : o]
 }
