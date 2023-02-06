@@ -1,19 +1,17 @@
-module "acm" {
-  source  = "terraform-aws-modules/acm/aws"
-  version = "~> 4.0"
-
-  domain_name = var.domain-name
-
-  subject_alternative_names = [
-    "*.omrisaaprac.com",
-  ]
-
-  create_route53_records  = false
-  validation_record_fqdns = var.fqdns
+resource "aws_acm_certificate" "cert" {
+  domain_name       = var.domain-name
+  validation_method = "DNS"
 
   tags = {
     Name = "fargate application certificate"
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
-
+resource "aws_acm_certificate_validation" "hello_cert_validate" {
+  certificate_arn = aws_acm_certificate.cert.arn
+  validation_record_fqdns = [var.fqdns]
+}
