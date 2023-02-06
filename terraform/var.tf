@@ -103,8 +103,3 @@ variable "domain-name" {
   description = "domain name for acm cert"
   default = "omrisaaprac.com"
 }
-
-variable "fqdns" {
-  type        = list(any)
-  default = ["fargate.omrisaaprac.com"]
-}

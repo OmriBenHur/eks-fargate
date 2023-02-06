@@ -22,5 +22,5 @@ resource "aws_route53_record" "fargate-app-dns" {
 
 resource "aws_acm_certificate_validation" "hello_cert_validate" {
   certificate_arn = aws_acm_certificate.fargate-certificate.arn
-  validation_record_fqdns = [for o in var.fqdns : o]
+  validation_record_fqdns = [aws_route53_record.fargate-app-dns.fqdn]
 }
