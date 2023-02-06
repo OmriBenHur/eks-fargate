@@ -1,4 +1,9 @@
 # data obj to return a list of available AZ's in the configured region
+variable "aws-region" {
+  description = "region for aws"
+  default = "us-west-2"
+}
+
 data "aws_availability_zones" "available_zones" {
   state = "available"
 }
@@ -54,4 +59,47 @@ variable "eks-subnet-type" {
   default     = "public"
 }
 
+variable "metric-server-name" {
+  description = "name for internal helm release of metric server"
+  default = "metric-server"
+}
 
+variable "metric-server-repo-url" {
+  description = "repo for helm chart of the metric server"
+  default = "https://kubernetes-sigs.github.io/metrics-server/"
+}
+
+variable "metric-server-chart-name" {
+  description = "chart name for metric server in the matching repo"
+  default = "metrics-server"
+}
+
+variable "metric-server-chart-version" {
+  description = "version of chart to be installed"
+  default = "3.8.2"
+}
+
+variable "load-balancer-name" {
+  description = "name for internal helm release of metric server"
+  default = "aws-load-balancer-controller"
+}
+
+variable "load-balancer-repo-url" {
+  description = "repo for helm chart of the metric server"
+  default = "https://aws.github.io/eks-charts/"
+}
+
+variable "load-balancer-chart-name" {
+  description = "chart name for metric server in the matching repo"
+  default = "aws-load-balancer-controller"
+}
+
+variable "load-balancer-chart-version" {
+  description = "version of chart to be installed"
+  default = "1.4.1"
+}
+
+variable "domain-name" {
+  description = "domain name for acm cert"
+  default = "omrisaaprac.com"
+}

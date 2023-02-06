@@ -18,8 +18,8 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
   tags = {
     Name                                            = "${var.vpc-name}-public-subnet-${count.index + 1}"
-    "Kubernetes.io / role / elb"                    = count.index
-    "kubernetes.io / cluster / ${var.cluster-name}" = "owned"
+    "Kubernetes.io/role/elb"                    = count.index
+    "kubernetes.io/cluster/${var.cluster-name}" = "owned"
 
   }
 }
@@ -31,7 +31,7 @@ resource "aws_subnet" "private" {
   availability_zone = data.aws_availability_zones.available_zones.names[count.index]
   tags = {
     Name                                            = "${var.vpc-name}-private-subnet-${count.index + 1}"
-    "Kubernetes.io / role / internal-elb"           = 2 + count.index
-    "kubernetes.io / cluster / ${var.cluster-name}" = "owned"
+    "kubernetes.io/role/internal-elb"           = 1 + count.index
+    "kubernetes.io/cluster/${var.cluster-name}" = "owned"
   }
 }

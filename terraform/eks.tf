@@ -29,6 +29,7 @@ resource "aws_iam_policy_attachment" "eks-cluster-role-policy-attachment" {
 
 
 # the eks control plane
+# aws eks update-kubeconfig --name var.cluster-name --region us-east-1
 resource "aws_eks_cluster" "eks-cluster-public" {
   count    = var.eks-subnet-type == "private" || var.fargate-staging-subnet-type == "private" || var.fargate-subnet-type == "private" ? 0 : 1
   name     = var.cluster-name
