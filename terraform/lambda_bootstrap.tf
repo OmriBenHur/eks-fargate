@@ -50,7 +50,7 @@ resource "aws_lambda_function" "bootstrap" {
   role             = aws_iam_role.bootstrap.arn
   filename         = data.archive_file.bootstrap_archive.output_path
   source_code_hash = data.archive_file.bootstrap_archive.output_base64sha256
-  timeout          = 120
+  timeout          = 200
   depends_on = [aws_eks_cluster.eks-cluster-private[0]]
 
   vpc_config {

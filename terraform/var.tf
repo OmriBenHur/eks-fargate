@@ -79,7 +79,6 @@ variable "metric-server-chart-version" {
   default = "3.8.2"
 }
 
-
 variable "load-balancer-name" {
   description = "name for internal helm release of metric server"
   default = "aws-load-balancer-controller"
@@ -100,4 +99,12 @@ variable "load-balancer-chart-version" {
   default = "1.4.1"
 }
 
+variable "domain-name" {
+  description = "domain name for acm cert"
+  default = "omrisaaprac.com"
+}
 
+variable "fqdns" {
+  type        = list(any)
+  default = ["fargate.omrisaaprac.com"]
+}
